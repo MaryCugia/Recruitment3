@@ -44,9 +44,12 @@ const mockApplications = [
 
 // Get all applications
 export const getApplications = async () => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  return mockApplications;
+  // Simulate API call
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockApplications);
+    }, 1000);
+  });
 };
 
 // Get application by ID
@@ -57,40 +60,34 @@ export const getApplicationById = async (id) => {
 };
 
 // Update application status
-export const updateApplicationStatus = async (id, status) => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  const application = mockApplications.find(app => app.id === id);
-  if (application) {
-    application.status = status;
-    application.lastUpdated = new Date().toISOString().split('T')[0];
-  }
-  return application;
+export const updateApplicationStatus = async (id, newStatus) => {
+  // Simulate API call
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const application = mockApplications.find(app => app.id === id);
+      if (application) {
+        application.status = newStatus;
+        application.lastUpdated = new Date().toISOString().split('T')[0];
+      }
+      resolve(application);
+    }, 1000);
+  });
 };
 
 // Search applications
 export const searchApplications = async (filters) => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  let results = [...mockApplications];
-  
-  if (filters.status) {
-    results = results.filter(app => app.status === filters.status);
-  }
-  
-  if (filters.jobTitle) {
-    results = results.filter(app => 
-      app.jobTitle.toLowerCase().includes(filters.jobTitle.toLowerCase())
-    );
-  }
-  
-  if (filters.candidateName) {
-    results = results.filter(app => 
-      app.candidateName.toLowerCase().includes(filters.candidateName.toLowerCase())
-    );
-  }
-  
-  return results;
+  // Simulate API call with filters
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const filtered = mockApplications.filter(app => {
+        const matchStatus = !filters.status || app.status === filters.status;
+        const matchJob = !filters.jobTitle || 
+          app.jobTitle.toLowerCase().includes(filters.jobTitle.toLowerCase());
+        const matchName = !filters.candidateName || 
+          app.candidateName.toLowerCase().includes(filters.candidateName.toLowerCase());
+        return matchStatus && matchJob && matchName;
+      });
+      resolve(filtered);
+    }, 1000);
+  });
 }; 

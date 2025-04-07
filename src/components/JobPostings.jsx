@@ -14,6 +14,7 @@ const JobPostings = () => {
         setJobs(data);
         setLoading(false);
       } catch (err) {
+        console.error('Error loading jobs:', err);
         setError('Failed to load jobs');
         setLoading(false);
       }

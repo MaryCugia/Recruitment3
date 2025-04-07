@@ -27,6 +27,7 @@ const RecruiterProfile = () => {
         const data = await getRecruiterProfile();
         setProfile(data);
       } catch (err) {
+        console.error('Error loading profile;', err);
         setError('Failed to load profile');
       } finally {
         setLoading(false);

@@ -24,6 +24,7 @@ const CandidateSearch = () => {
       const searchResults = await searchCandidates(searchForm);
       setResults(searchResults);
     } catch (err) {
+      console.error('Error searching candidates:', err);
       setError('Failed to search candidates');
     } finally {
       setLoading(false);

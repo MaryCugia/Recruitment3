@@ -34,6 +34,7 @@ const Dashboard = () => {
         activeJobs: jobs.filter(job => job.status === 'Active').length
       });
     } catch (err) {
+      console.error('Error loading dashboard data:', err);
       setError('Failed to load dashboard data');
     } finally {
       setLoading(false);

@@ -16,6 +16,7 @@ const CandidateProfileModal = ({ candidateId, onClose }) => {
         const data = await getCandidateById(candidateId);
         setCandidate(data);
       } catch (err) {
+        console.error('Error loading candidate profile:', err);
         setError('Failed to load candidate profile');
       } finally {
         setLoading(false);

@@ -22,6 +22,7 @@ const Applications = () => {
       const data = await getApplications();
       setApplications(data);
     } catch (err) {
+      console.error('Error loading applications:', err);
       setError('Failed to load applications');
     } finally {
       setLoading(false);
@@ -34,6 +35,7 @@ const Applications = () => {
       const results = await searchApplications(filters);
       setApplications(results);
     } catch (err) {
+      console.error('Error searching applications:', err);
       setError('Failed to search applications');
     } finally {
       setLoading(false);
@@ -46,6 +48,7 @@ const Applications = () => {
       await updateApplicationStatus(id, newStatus);
       await fetchApplications(); // Refresh the list
     } catch (err) {
+      console.error('Error updating application status:', err);
       setError('Failed to update application status');
     } finally {
       setLoading(false);

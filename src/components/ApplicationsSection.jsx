@@ -1,44 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { mockApplications } from '../data/mockApplications';
 import '../styles/ApplicationsSection.css';
 
 const ApplicationsSection = () => {
-  const [applications, setApplications] = useState([
-    {
-      id: 1,
-      jobTitle: 'Senior Software Engineer',
-      company: 'Tech Solutions Inc',
-      location: 'Nairobi, Kenya',
-      appliedDate: '2024-03-15',
-      status: 'Under Review',
-      lastUpdated: '2024-03-16',
-      interviewDate: '2024-03-25',
-      notes: 'Technical interview scheduled'
-    },
-    {
-      id: 2,
-      jobTitle: 'Product Manager',
-      company: 'Digital Innovations',
-      location: 'Nairobi, Kenya',
-      appliedDate: '2024-03-10',
-      status: 'Interview Scheduled',
-      lastUpdated: '2024-03-12',
-      interviewDate: '2024-03-20',
-      notes: 'First round interview completed'
-    },
-    {
-      id: 3,
-      jobTitle: 'Full Stack Developer',
-      company: 'WebTech Kenya',
-      location: 'Nairobi, Kenya',
-      appliedDate: '2024-03-05',
-      status: 'Rejected',
-      lastUpdated: '2024-03-08',
-      notes: 'Position filled internally'
-    }
-  ]);
-
+  const [applications, setApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
+
+  useEffect(() => {
+    setApplications(mockApplications);
+  }, []);
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {

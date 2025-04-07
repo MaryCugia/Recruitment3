@@ -1,65 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { mockInterviews } from '../data/mockInterviews';
 import '../styles/InterviewsSection.css';
 
 const InterviewsSection = () => {
-  const [interviews, setInterviews] = useState([
-    {
-      id: 1,
-      jobTitle: 'Senior Software Engineer',
-      company: 'Tech Solutions Inc',
-      type: 'Technical Interview',
-      date: '2024-03-20',
-      time: '10:00 AM',
-      duration: '60 minutes',
-      interviewer: 'John Smith',
-      status: 'upcoming',
-      location: 'Virtual (Zoom)',
-      meetingLink: 'https://zoom.us/j/123456789',
-      notes: 'Please prepare for system design questions and coding challenges',
-      requirements: [
-        'Laptop with development environment set up',
-        'Stable internet connection',
-        'Camera and microphone'
-      ]
-    },
-    {
-      id: 2,
-      jobTitle: 'Product Manager',
-      company: 'Digital Innovations',
-      type: 'Behavioral Interview',
-      date: '2024-03-18',
-      time: '02:30 PM',
-      duration: '45 minutes',
-      interviewer: 'Sarah Johnson',
-      status: 'completed',
-      location: 'In-person',
-      address: '123 Business Park, Nairobi',
-      notes: 'Focus on product strategy and team management experience',
-      feedback: 'Strong communication skills and relevant experience'
-    },
-    {
-      id: 3,
-      jobTitle: 'UX/UI Designer',
-      company: 'Creative Tech',
-      type: 'Portfolio Review',
-      date: '2024-03-25',
-      time: '11:00 AM',
-      duration: '90 minutes',
-      interviewer: 'Michael Brown',
-      status: 'upcoming',
-      location: 'Virtual (Google Meet)',
-      meetingLink: 'https://meet.google.com/abc-defg-hij',
-      notes: 'Be prepared to walk through 2-3 recent projects',
-      requirements: [
-        'Portfolio presentation',
-        'Design process documentation',
-        'Case studies'
-      ]
-    }
-  ]);
-
+  const [interviews, setInterviews] = useState([]);
   const [selectedInterview, setSelectedInterview] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadInterviews = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        setInterviews(mockInterviews);
+      } catch (err) {
+        console.error('Error loading interviews:', err);
+        setError('Failed to load interviews');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInterviews();
+  }, []);
 
   const handleViewDetails = (interview) => {
     setSelectedInterview(interview);
@@ -116,71 +81,75 @@ const InterviewsSection = () => {
       </div>
 
       <div className="interviews-list">
-        {interviews.map(interview => (
-          <div key={interview.id} className="interview-card">
-            <div className="interview-header">
-              <div className="interview-info">
-                <h3>{interview.jobTitle}</h3>
-                <p className="company">{interview.company}</p>
-                <span className={`status-badge ${getStatusClass(interview.status)}`}>
-                  {interview.status}
-                </span>
+        {loading && <div>Loading...</div>}
+        {error && <div className="error">{error}</div>}
+        {!loading && !error && (
+          interviews.map(interview => (
+            <div key={interview.id} className="interview-card">
+              <div className="interview-header">
+                <div className="interview-info">
+                  <h3>{interview.jobTitle}</h3>
+                  <p className="company">{interview.company}</p>
+                  <span className={`status-badge ${getStatusClass(interview.status)}`}>
+                    {interview.status}
+                  </span>
+                </div>
+                <div className="interview-meta">
+                  <div className="meta-item">
+                    <i className="fas fa-calendar"></i>
+                    <span>{formatDate(interview.date)}</span>
+                  </div>
+                  <div className="meta-item">
+                    <i className="fas fa-clock"></i>
+                    <span>{interview.time}</span>
+                  </div>
+                  <div className="meta-item">
+                    <i className="fas fa-user"></i>
+                    <span>{interview.interviewer}</span>
+                  </div>
+                </div>
               </div>
-              <div className="interview-meta">
-                <div className="meta-item">
-                  <i className="fas fa-calendar"></i>
-                  <span>{formatDate(interview.date)}</span>
+              <div className="interview-details">
+                <div className="detail-item">
+                  <span className="label">Type:</span>
+                  <span className="value">{interview.type}</span>
                 </div>
-                <div className="meta-item">
-                  <i className="fas fa-clock"></i>
-                  <span>{interview.time}</span>
+                <div className="detail-item">
+                  <span className="label">Duration:</span>
+                  <span className="value">{interview.duration}</span>
                 </div>
-                <div className="meta-item">
-                  <i className="fas fa-user"></i>
-                  <span>{interview.interviewer}</span>
+                <div className="detail-item">
+                  <span className="label">Location:</span>
+                  <span className="value">{interview.location}</span>
                 </div>
+              </div>
+              <div className="interview-actions">
+                <button 
+                  className="action-btn view-btn"
+                  onClick={() => handleViewDetails(interview)}
+                >
+                  View Details
+                </button>
+                {interview.status === 'upcoming' && (
+                  <>
+                    <button 
+                      className="action-btn reschedule-btn"
+                      onClick={() => handleReschedule(interview.id)}
+                    >
+                      Reschedule
+                    </button>
+                    <button 
+                      className="action-btn cancel-btn"
+                      onClick={() => handleCancel(interview.id)}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                )}
               </div>
             </div>
-            <div className="interview-details">
-              <div className="detail-item">
-                <span className="label">Type:</span>
-                <span className="value">{interview.type}</span>
-              </div>
-              <div className="detail-item">
-                <span className="label">Duration:</span>
-                <span className="value">{interview.duration}</span>
-              </div>
-              <div className="detail-item">
-                <span className="label">Location:</span>
-                <span className="value">{interview.location}</span>
-              </div>
-            </div>
-            <div className="interview-actions">
-              <button 
-                className="action-btn view-btn"
-                onClick={() => handleViewDetails(interview)}
-              >
-                View Details
-              </button>
-              {interview.status === 'upcoming' && (
-                <>
-                  <button 
-                    className="action-btn reschedule-btn"
-                    onClick={() => handleReschedule(interview.id)}
-                  >
-                    Reschedule
-                  </button>
-                  <button 
-                    className="action-btn cancel-btn"
-                    onClick={() => handleCancel(interview.id)}
-                  >
-                    Cancel
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       {showDetails && selectedInterview && (
