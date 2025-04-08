@@ -3,14 +3,14 @@ import { createJob } from '../api/jobs';
 import '../styles/RecruiterDashboard.css';
 
 const RecruiterDashboard = () => {
-  const [stats] = useState({
+  const [stats, setStats] = useState({
     activeJobs: 12,
     newApplications: 24,
     upcomingInterviews: 8,
     totalCandidates: 156
   });
 
-  const [recentActivity] = useState([
+  const [recentActivity, setRecentActivity] = useState([
     {
       id: 1,
       type: 'application',
@@ -73,10 +73,11 @@ const RecruiterDashboard = () => {
       console.log('Job created successfully:', newJob);
       
       // Update the stats
-      setStats(prevStats => ({
+      setStats((prevStats) => ({
         ...prevStats,
-        activeJobs: prevStats.activeJobs + 1
+        activeJobs: prevStats.activeJobs + 1,
       }));
+  
 
       // Add to recent activity
       setRecentActivity(prevActivity => [
