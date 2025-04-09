@@ -8,7 +8,13 @@ const router = express.Router();
 // Register endpoint
 router.post('/register', async (req, res) => {
   try {
+    console.log('Register request received:', req.body);
     const { name, email, password, role } = req.body;
+    
+    if (!name || !email || !password || !role) {
+      console.log('Missing required fields');
+      return res.status(400).json({ error: 'All fields are required' });
+    }
     
     // Check if user already exists
     const [existingUsers] = await pool.query(
@@ -17,6 +23,7 @@ router.post('/register', async (req, res) => {
     );
 
     if (existingUsers.length > 0) {
+      console.log('User already exists with email:', email);
       return res.status(400).json({ error: 'User already exists' });
     }
 
@@ -24,6 +31,7 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert new user
+    console.log('Inserting new user:', { name, email, role });
     const [result] = await pool.query(
       'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
       [name, email, hashedPassword, role]
@@ -36,6 +44,8 @@ router.post('/register', async (req, res) => {
       { expiresIn: '24h' }
     );
 
+    console.log('User registered successfully with ID:', result.insertId);
+    
     res.status(201).json({
       message: 'User registered successfully',
       token,
@@ -55,7 +65,13 @@ router.post('/register', async (req, res) => {
 // Login endpoint
 router.post('/login', async (req, res) => {
   try {
+    console.log('Login request received:', req.body);
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      console.log('Missing email or password');
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
 
     // Find user
     const [users] = await pool.query(
@@ -64,6 +80,7 @@ router.post('/login', async (req, res) => {
     );
 
     if (users.length === 0) {
+      console.log('No user found with email:', email);
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
@@ -72,6 +89,7 @@ router.post('/login', async (req, res) => {
     // Verify password
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
+      console.log('Invalid password for user:', email);
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
@@ -82,6 +100,8 @@ router.post('/login', async (req, res) => {
       { expiresIn: '24h' }
     );
 
+    console.log('User logged in successfully:', user.id);
+    
     res.json({
       message: 'Login successful',
       token,

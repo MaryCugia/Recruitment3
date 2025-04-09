@@ -77,32 +77,49 @@ body {
 
 .auth-buttons {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 15px;
+}
+
+.login-btn, .register-btn, .logout-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .login-btn {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  background: transparent;
 }
 
 .login-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 123, 255, 0.1);
 }
 
-.register-btn {
-  background-color: white;
-  color: #2B579A;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+.register-btn, .logout-btn {
+  color: white;
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
-.register-btn:hover {
-  background-color: rgba(255, 255, 255, 0.9);
+.register-btn:hover, .logout-btn:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.logout-btn {
+  font-size: 14px;
+  border: none;
+}
+
+.welcome-text {
+  font-size: 14px;
+  color: #666;
+  margin-right: 10px;
 }
 
 .main-content {
@@ -122,6 +139,17 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+}
+
+/* Error message styles */
+.error-message {
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-left: 4px solid #d32f2f;
 }
 
 /* Responsive design */
