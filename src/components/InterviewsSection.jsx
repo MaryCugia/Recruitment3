@@ -81,7 +81,7 @@ const InterviewsSection = () => {
       </div>
 
       <div className="interviews-list">
-        {loading && <div>Loading...</div>}
+        {loading && <div className="loading">Loading interviews...</div>}
         {error && <div className="error">{error}</div>}
         {!loading && !error && (
           interviews.map(interview => (
@@ -116,7 +116,7 @@ const InterviewsSection = () => {
                 </div>
                 <div className="detail-item">
                   <span className="label">Duration:</span>
-                  <span className="value">{interview.duration}</span>
+                  <span className="value">{interview.duration} minutes</span>
                 </div>
                 <div className="detail-item">
                   <span className="label">Location:</span>
@@ -196,9 +196,6 @@ const InterviewsSection = () => {
                   >
                     Join Meeting
                   </a>
-                )}
-                {selectedInterview.address && (
-                  <p className="address">{selectedInterview.address}</p>
                 )}
               </div>
 

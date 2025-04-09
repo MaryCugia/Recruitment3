@@ -62,57 +62,55 @@ const mockJobs = [
   }
 ];
 
+const API_URL = 'http://localhost:5000/api';  // Update this to match your backend URL
+
 // Get all jobs
 export const getJobs = async () => {
-  // Simulate API call delay
+  // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 500));
   return mockJobs;
 };
 
 // Get job by ID
 export const getJobById = async (id) => {
-  // Simulate API call delay
+  // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 500));
   return mockJobs.find(job => job.id === id);
 };
 
 // Create new job
 export const createJob = async (jobData) => {
-  // Simulate API call delay
+  // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 1000));
-  
   const newJob = {
-    id: mockJobs.length + 1,
     ...jobData,
+    id: mockJobs.length + 1,
     postedDate: new Date().toISOString().split('T')[0],
     status: 'Active'
   };
-  
   mockJobs.push(newJob);
   return newJob;
 };
 
 // Update job
 export const updateJob = async (id, jobData) => {
-  // Simulate API call delay
+  // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  const jobIndex = mockJobs.findIndex(job => job.id === id);
-  if (jobIndex !== -1) {
-    mockJobs[jobIndex] = { ...mockJobs[jobIndex], ...jobData };
-    return mockJobs[jobIndex];
+  const index = mockJobs.findIndex(job => job.id === id);
+  if (index !== -1) {
+    mockJobs[index] = { ...mockJobs[index], ...jobData };
+    return mockJobs[index];
   }
   return null;
 };
 
 // Delete job
 export const deleteJob = async (id) => {
-  // Simulate API call delay
+  // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  const jobIndex = mockJobs.findIndex(job => job.id === id);
-  if (jobIndex !== -1) {
-    mockJobs.splice(jobIndex, 1);
+  const index = mockJobs.findIndex(job => job.id === id);
+  if (index !== -1) {
+    mockJobs.splice(index, 1);
     return true;
   }
   return false;

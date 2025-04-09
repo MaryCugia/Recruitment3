@@ -178,6 +178,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(0);
 }
 
 .modal-overlay {
@@ -187,6 +188,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: none;
 }
 
 .modal-content {
@@ -200,6 +202,8 @@
   flex-direction: column;
   z-index: 1;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: none;
+  opacity: 1;
 }
 
 .modal-header {
@@ -208,6 +212,7 @@
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #e9ecef;
+  background-color: white;
 }
 
 .modal-header h2 {
@@ -227,6 +232,7 @@
 .modal-body {
   padding: 1.5rem;
   overflow-y: auto;
+  background-color: white;
 }
 
 .interview-info {
@@ -242,8 +248,20 @@
 
 .meta-info {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.meta-info span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: #666;
+}
+
+.meta-info i {
+  color: #2B579A;
 }
 
 .interviewer-info {
@@ -266,12 +284,17 @@
 
 .meeting-link {
   display: inline-block;
+  margin-top: 1rem;
   padding: 0.5rem 1rem;
   background-color: #2B579A;
   color: white;
   text-decoration: none;
   border-radius: 4px;
-  margin-top: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.meeting-link:hover {
+  background-color: #1e3f6f;
 }
 
 .address {
@@ -296,15 +319,88 @@
 .requirements ul {
   list-style-type: disc;
   padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.requirements li {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.feedback {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.feedback h3 {
+  color: #2B579A;
+  margin-bottom: 0.5rem;
+}
+
+.feedback p {
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Ensure text is clear and readable */
+.modal-content * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Add smooth transition for modal appearance */
+.interview-details-modal {
+  transition: opacity 0.3s ease;
+}
+
+.interview-details-modal.show {
+  opacity: 1;
+}
+
+/* Ensure proper stacking context */
+.modal-content {
+  position: relative;
+  z-index: 2;
+}
+
+.modal-overlay {
+  position: fixed;
+  z-index: 1;
+}
+
+/* Improve text contrast */
+.modal-content h2,
+.modal-content h3,
+.modal-content h4,
+.modal-content p {
+  color: #333;
+}
+
+/* Add proper spacing between sections */
+.modal-body > div {
+  margin-bottom: 2rem;
+}
+
+/* Improve readability of meta information */
+.meta-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.meta-info span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: #666;
 }
 
-.modal-footer {
-  padding: 1rem;
-  border-top: 1px solid #e9ecef;
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
+.meta-info i {
+  color: #2B579A;
 }
 
 /* Responsive Design */

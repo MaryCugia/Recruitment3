@@ -1,0 +1,164 @@
+.job-details-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.job-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 1rem;
+}
+
+.job-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.job-header h2 {
+  font-size: 1.5rem;
+  color: #34495e;
+  margin-bottom: 1.5rem;
+}
+
+.job-meta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  color: #7f8c8d;
+}
+
+.job-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.job-description {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.job-description h3 {
+  color: #2c3e50;
+  margin: 2rem 0 1rem;
+  font-size: 1.5rem;
+}
+
+.job-description h3:first-child {
+  margin-top: 0;
+}
+
+.job-description p {
+  line-height: 1.6;
+  color: #34495e;
+  margin-bottom: 1.5rem;
+}
+
+.job-description ul {
+  list-style: none;
+  padding: 0;
+}
+
+.job-description ul li {
+  padding: 0.5rem 0;
+  color: #34495e;
+  display: flex;
+  align-items: center;
+}
+
+.job-description ul li:before {
+  content: "•";
+  color: #3498db;
+  margin-right: 0.75rem;
+  font-weight: bold;
+}
+
+.job-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.apply-button, .save-button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.apply-button {
+  background: #3498db;
+  color: white;
+}
+
+.apply-button:hover {
+  background: #2980b9;
+}
+
+.save-button {
+  background: white;
+  color: #3498db;
+  border: 2px solid #3498db;
+}
+
+.save-button:hover {
+  background: #f8f9fa;
+}
+
+.ai-insights-section {
+  margin-top: 3rem;
+}
+
+.ai-insights-section h3 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.loading, .error, .not-found {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .job-content {
+    grid-template-columns: 1fr;
+  }
+
+  .job-actions {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .job-header h1 {
+    font-size: 2rem;
+  }
+
+  .job-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .job-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+} 

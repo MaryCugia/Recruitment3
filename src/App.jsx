@@ -2,13 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './styles/App.css';
 import Home from './components/Home';
+import About from './components/About';
 import CandidatePortal from './components/CandidatePortal';
 import RecruiterPortal from './components/RecruiterPortal';
-
-// Placeholder components - we'll create these later
-const About = () => <div>About Us</div>;
-const Login = () => <div>Login Page</div>;
-const Register = () => <div>Register Page</div>;
+import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   return (
