@@ -120,6 +120,19 @@ body {
   font-size: 14px;
   color: #666;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-badge {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .main-content {

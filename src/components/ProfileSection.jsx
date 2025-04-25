@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import '../styles/ProfileSection.css';
 
+const STORAGE_KEY = 'candidate_profile_data';
+
 const ProfileSection = () => {
+  const { currentUser } = useAuth();
   const [formData, setFormData] = useState({
     personal: {
       firstName: '',
@@ -38,6 +42,23 @@ const ProfileSection = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
+
+  // Load saved profile data on component mount
+  useEffect(() => {
+    if (currentUser) {
+      // Try to load user profile from localStorage
+      const savedData = localStorage.getItem(`${STORAGE_KEY}_${currentUser.uid}`);
+      if (savedData) {
+        try {
+          const parsedData = JSON.parse(savedData);
+          setFormData(parsedData);
+          console.log('Loaded profile data from localStorage');
+        } catch (error) {
+          console.error('Error parsing saved profile data:', error);
+        }
+      }
+    }
+  }, [currentUser]);
 
   const handleInputChange = (section, field, value) => {
     setFormData(prev => ({
@@ -87,23 +108,18 @@ const ProfileSection = () => {
     setSaveStatus({ type: '', message: '' });
 
     try {
-      const response = await fetch('/api/candidate/profile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save profile');
+      // Save to localStorage with user ID to keep profiles separate
+      if (currentUser) {
+        localStorage.setItem(`${STORAGE_KEY}_${currentUser.uid}`, JSON.stringify(formData));
+        console.log('Profile saved to localStorage');
+        
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        setSaveStatus({ type: 'success', message: 'Profile saved successfully!' });
+      } else {
+        throw new Error('User not authenticated');
       }
-
-      const data = await response.json();
-      setSaveStatus({ type: 'success', message: 'Profile saved successfully!' });
-      
-      // Update form data with any server-side modifications
-      setFormData(data);
     } catch (error) {
       console.error('Error saving profile:', error);
       setSaveStatus({ type: 'error', message: 'Failed to save profile. Please try again.' });

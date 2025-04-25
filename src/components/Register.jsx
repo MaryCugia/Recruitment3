@@ -40,11 +40,21 @@ const Register = () => {
     setLoading(true);
 
     try {
+      // Log registration attempt for debugging
+      console.log('Attempting to register with email:', formData.email);
+      console.log('User role selected:', formData.role);
+      
       // Firebase signup
-      await signup(formData.email, formData.password, formData.name, formData.role);
-      navigate('/');
+      const user = await signup(formData.email, formData.password, formData.name, formData.role);
+      console.log('Registration successful!', user);
+      
+      // Add a small delay before redirecting to ensure everything is saved
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
     } catch (error) {
       console.error('Signup error:', error);
+      console.error('Error code:', error.code);
       let errorMessage = 'Failed to create account';
       
       // Handle specific Firebase auth errors with user-friendly messages

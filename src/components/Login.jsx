@@ -26,11 +26,13 @@ const Login = () => {
     setLoading(true);
 
     try {
+      console.log('Attempting to login with:', formData.email);
       // Firebase login
       await login(formData.email, formData.password);
       navigate('/');
     } catch (error) {
       console.error('Login error:', error);
+      console.error('Error code:', error.code);
       let errorMessage = 'Failed to log in';
       
       // Handle specific Firebase auth errors with user-friendly messages
@@ -43,6 +45,7 @@ const Login = () => {
           break;
         case 'auth/user-not-found':
         case 'auth/wrong-password':
+        case 'auth/invalid-credential':
           errorMessage = 'Incorrect email or password';
           break;
         case 'auth/too-many-requests':
@@ -59,6 +62,20 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Debug function to show stored roles
+  const handleShowRoles = () => {
+    const roles = localStorage.getItem('fairhire_user_roles');
+    console.log('Current stored roles:', roles ? JSON.parse(roles) : 'No roles found');
+    alert('Roles are logged to the console. Press F12 to view.');
+  };
+
+  // Debug function to clear stored roles
+  const handleClearRoles = () => {
+    localStorage.removeItem('fairhire_user_roles');
+    console.log('User roles have been cleared');
+    alert('All user roles have been cleared. You will need to sign up again.');
   };
 
   return (
@@ -98,6 +115,12 @@ const Login = () => {
       </form>
       <div className="auth-redirect">
         Don't have an account? <Link to="/register">Sign Up</Link>
+      </div>
+
+      {/* Debug tools - remove in production */}
+      <div className="debug-tools">
+        <button onClick={handleShowRoles} className="debug-button">Check Roles</button>
+        <button onClick={handleClearRoles} className="debug-button">Clear Roles</button>
       </div>
     </div>
   );
